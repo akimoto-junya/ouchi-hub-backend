@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    volumes:
+      - "./:/work"
+    working_dir: "/work"
+    command: ["air", "-c", ".air.toml"]
+

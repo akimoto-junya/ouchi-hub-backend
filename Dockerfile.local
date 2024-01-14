@@ -1,0 +1,4 @@
+FROM golang:1.21.6-bookworm
+WORKDIR /work
+COPY .air.toml .
+RUN go install github.com/cosmtrek/air@latest
