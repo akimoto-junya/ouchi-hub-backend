@@ -11,9 +11,9 @@ jobs:
       - restore_cache:
           key: go-mod-{{ checksum "go.sum" }}
       - run:
-        name: initialize
-        command: |
-          go install honnef.co/go/tools/cmd/staticcheck@latest
+          name: initialize
+          command: |
+            go install honnef.co/go/tools/cmd/staticcheck@latest
       - run:
           name: Download Go modules
           command: go mod download
@@ -22,8 +22,8 @@ jobs:
           paths:
             - /home/circleci/go/pkg/mod
       - run:
-        name: staticcheck
-        command: staticcheck ./...
+          name: staticcheck
+          command: staticcheck ./...
       - run:
           name: Run tests
           command: go test ./...
@@ -31,19 +31,19 @@ jobs:
     executor: gcp-cli/default
     steps:
       - setup_remote_docker:
-        docker_layer_caching: false
+          docker_layer_caching: false
       - gcp-cli/setup:
-        version: 459.0.0
+          version: 459.0.0
       - checkout
       - run:
-        name: docker auth
-        command: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+          name: docker auth
+          command: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
       - run: 
-        name: build
-        command: make docker-build
+          name: build
+          command: make docker-build
       - run: 
-        name: push
-        command: make docker-push
+          name: push
+          command: make docker-push
 workflows:
   test-and-deploy:
     jobs:
