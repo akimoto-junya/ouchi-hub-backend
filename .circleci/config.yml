@@ -31,7 +31,7 @@ jobs:
     executor: gcp-cli/default
     steps:
       - setup_remote_docker:
-        docker_layer_caching: true
+        docker_layer_caching: false
       - gcp-cli/setup:
         version: 459.0.0
       - checkout
@@ -40,7 +40,7 @@ jobs:
         command: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
       - run: 
         name: build
-        comamnd: make docker-build
+        command: make docker-build
       - run: 
         name: push
         command: make docker-push
