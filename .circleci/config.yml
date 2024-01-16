@@ -1,9 +1,9 @@
-# This config was automatically generated from your source code
-# Stacks detected: artifact:go-executable:,deps:go:.
 version: 2.1
+orbs:
+  gcp-cli: circleci/gcp-cli@3.1.0
+
 jobs:
-  test-go:
-    # Install go modules and run tests
+  test:
     docker:
       - image: cimg/go:1.20
     steps:
@@ -11,65 +11,43 @@ jobs:
       - restore_cache:
           key: go-mod-{{ checksum "go.sum" }}
       - run:
+        name: initialize
+        command: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+      - run:
           name: Download Go modules
           command: go mod download
-      - run:
-          name: Print go mod help instructions
-          command: "echo \"go mod download will fail if you have private repositories \nOne way to fix this for private go modules that are hosted in github:\n  1. Add a GITHUB_TOKEN and GITHUB_USER to an org context. Please refer to https://circleci.com/docs/contexts/ for more informaiton on how to use contexts.\n  2. Add a .circleci/config.yml to your repository or use this config.yml as a starting template\n  3. Configure the jobs to use the newly created context which includes GITHUB_TOKEN and GITHUB_USER  \n  4. Before downloading the modules you will need to add a step to execute \\\"go env -w GOPRIVATE=github.com/<OrgNameHere>\\\". \n\tThis allows go mod to install private repos under OrgNameHere.\n  5. You will also need to run \\\"git config --global url.\\\"https://$GITHUB_USER:$GITHUB_TOKEN@github.com/<OrgNameHere>/\\\".insteadOf \\\"https://github.com/<OrgNameHere>/\\\"\\\"\n  6. Finally include the \\\"go mod download\\\" it should be able to fetch your private libraries now. \nFor gitlab private go modules, follow the same instructions as above but include your GITLAB_TOKEN and GITLAB_USER.\nThen use gitlab.com instead of github.com in steps 4 and 5.\nSee https://go.dev/ref/mod#private-modules for more details.\""
-          when: on_fail
       - save_cache:
           key: go-mod-{{ checksum "go.sum" }}
           paths:
             - /home/circleci/go/pkg/mod
+      - run:
+        name: staticcheck
+        command: staticcheck ./...
       - run:
           name: Run tests
-          command: gotestsum --junitfile junit.xml
-      - store_test_results:
-          path: junit.xml
-  build-go-executables:
-    # Build go executables and store them as artifacts
-    docker:
-      - image: cimg/go:1.20
+          command: go test ./...
+  deploy-image:
+    executor: gcp-cli/default
     steps:
+      - setup_remote_docker:
+        docker_layer_caching: true
+      - gcp-cli/setup:
+        version: 459.0.0
       - checkout
-      - restore_cache:
-          key: go-mod-{{ checksum "go.sum" }}
       - run:
-          name: Download Go modules
-          command: go mod download
-      - run:
-          name: Print go mod help instructions
-          command: "echo \"go mod download will fail if you have private repositories \nOne way to fix this for private go modules that are hosted in github:\n  1. Add a GITHUB_TOKEN and GITHUB_USER to an org context. Please refer to https://circleci.com/docs/contexts/ for more informaiton on how to use contexts.\n  2. Add a .circleci/config.yml to your repository or use this config.yml as a starting template\n  3. Configure the jobs to use the newly created context which includes GITHUB_TOKEN and GITHUB_USER  \n  4. Before downloading the modules you will need to add a step to execute \\\"go env -w GOPRIVATE=github.com/<OrgNameHere>\\\". \n\tThis allows go mod to install private repos under OrgNameHere.\n  5. You will also need to run \\\"git config --global url.\\\"https://$GITHUB_USER:$GITHUB_TOKEN@github.com/<OrgNameHere>/\\\".insteadOf \\\"https://github.com/<OrgNameHere>/\\\"\\\"\n  6. Finally include the \\\"go mod download\\\" it should be able to fetch your private libraries now. \nFor gitlab private go modules, follow the same instructions as above but include your GITLAB_TOKEN and GITLAB_USER.\nThen use gitlab.com instead of github.com in steps 4 and 5.\nSee https://go.dev/ref/mod#private-modules for more details.\""
-          when: on_fail
-      - save_cache:
-          key: go-mod-{{ checksum "go.sum" }}
-          paths:
-            - /home/circleci/go/pkg/mod
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      - run:
-          name: Build executables
-          command: go build -o ~/artifacts ./...
-      - store_artifacts:
-          path: ~/artifacts
-          destination: executables
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+        name: docker auth
+        command: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+      - run: 
+        name: build
+        comamnd: make docker-build
+      - run: 
+        name: push
+        command: make docker-push
 workflows:
-  build-and-test:
+  test-and-deploy:
     jobs:
-      - test-go
-      - build-go-executables:
+      - test
+      - deploy-image:
           requires:
-            - test-go
-    # - deploy:
-    #     requires:
-    #       - build-go-executables
+            - test
