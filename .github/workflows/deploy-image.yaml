@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: 'Google Cloud Auth'
-        uses: googgle-github-actions/auth@v2
+        uses: google-github-actions/auth@v2
         with: 
           credentials.json: '${{ secrets.GCP_SA_KEY }}'
       - name: 'Setup Docker Buildx'
