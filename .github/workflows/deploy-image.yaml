@@ -27,8 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test
-    environment:
-      url: https://github.com/akimoto-junya/ouchi-hub-manifests/pulls
     steps:
       - uses: actions/checkout@4
       - name: 'Google Cloud Auth'
