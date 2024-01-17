@@ -61,5 +61,5 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           commit-message: 'Update backend image tag'
           delete-branch: true
-          title: 'Update bacnekd image tag'
+          title: 'Update backend image tag'
           branch: update-backend-image-tag
