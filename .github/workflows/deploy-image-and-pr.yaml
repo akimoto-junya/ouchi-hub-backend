@@ -53,3 +53,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: akimoto-junya/ouchi-hub-manifests
+      - name: 'Update tag'
+        run: sed -i -E 's/(asia-northeast1-docker.pkg.dev\/ouchihub\/ouchi-hub\/backend:)[0-9a-z]+/\1${{ github.sha }}/' backend/deployment.yaml
+      - name: 'Create Pull Request'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: 'Update backend image tag'
+          delete-branch: true
+          title: 'Update bacnekd image tag'
+          branch: update-backend-image-tag
