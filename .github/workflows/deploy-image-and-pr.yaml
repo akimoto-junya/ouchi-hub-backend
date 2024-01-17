@@ -58,8 +58,7 @@ jobs:
       - name: 'Create Pull Request'
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.MACHINE_USER_TOKEN }}
-          author: 'akmt-bot <akimoto14301+bot@gmail.com>'
+          token: ${{ secrets.PERSONAL_TOKEN }}
           commit-message: 'Update backend image tag'
           delete-branch: true
           title: 'Update bacnekd image tag'
