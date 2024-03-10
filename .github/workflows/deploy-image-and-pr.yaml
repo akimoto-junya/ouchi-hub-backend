@@ -44,6 +44,7 @@ jobs:
           push: true
           file: Dockerfile
           tags: asia-northeast1-docker.pkg.dev/ouchihub/ouchi-hub/backend:${{ github.sha }}
+
   pull-request:
     runs-on: ubuntu-latest
     needs:

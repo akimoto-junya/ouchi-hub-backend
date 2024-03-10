@@ -1,0 +1,36 @@
+name: generate-and-commit
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - sqlc/**
+      - sqlc.yaml
+
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ./go.mod
+          cache: false
+      - uses: sqlc-dev/setup-sqlc@v3
+        with:
+          sqlc-version: "1.25.0"
+      - name: delete preview generated code
+        run: rm ./internal/infra/db/*.go
+      - run: sqlc generate
+      - run: go generate ./...
+      - run: go mod tidy
+      - name: Commit and push if changed
+        run: |
+          git diff
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add --all
+          git commit -m "Update generated code" || exit 0
+          git push

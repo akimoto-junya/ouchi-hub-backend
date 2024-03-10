@@ -7,4 +7,6 @@ services:
       - "./:/work"
     working_dir: "/work"
     command: ["air", "-c", ".air.toml"]
+    ports:
+      - "9000:9000"
 

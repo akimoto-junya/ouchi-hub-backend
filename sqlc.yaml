@@ -1,0 +1,17 @@
+version: "2"
+sql:
+ - engine: "mysql"
+   queries: [
+     "sqlc/query/users.sql",
+   ]
+   schema: [
+     "sqlc/schema/0000_preload.sql",
+     "sqlc/schema/0001_users.sql",
+   ]
+   gen:
+     go:
+       package: "db"
+       out: "internal/infra/db"
+       overrides:
+         - db_type: "uuid"
+           go_type: "github.com/google/uuid.UUID"
