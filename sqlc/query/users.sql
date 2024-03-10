@@ -4,6 +4,6 @@ VALUES (?)
 ;
 
 -- name: DeleteUser :exec
-DELETE FROM users 
+DELETE FROM users
 WHERE id = ?
 ;
