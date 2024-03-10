@@ -6,6 +6,8 @@ on:
     paths:
       - sqlc/**
       - sqlc.yaml
+permissions:
+  contents: write
 
 jobs:
   generate-and-commit:
