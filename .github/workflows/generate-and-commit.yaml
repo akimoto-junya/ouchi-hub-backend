@@ -24,6 +24,7 @@ jobs:
       - name: delete preview generated code
         run: rm ./internal/infra/db/*.go
       - run: sqlc generate
+      - run: sqlc diff
       - run: go generate ./...
       - run: go mod tidy
       - name: Commit and push if changed
