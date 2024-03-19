@@ -6,6 +6,20 @@ package db
 
 import ()
 
+type Item struct {
+	ID     string
+	Name   string
+	TypeID string
+	WorkID string
+	Lft    int64
+	Rgt    int64
+}
+
+type ItemType struct {
+	ID   string
+	Name string
+}
+
 type User struct {
 	ID string
 }

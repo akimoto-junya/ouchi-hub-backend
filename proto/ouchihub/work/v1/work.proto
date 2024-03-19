@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package ouchihub.work.v1;
+
+//import "google/protobuf/timestamp.proto";
+import "ouchihub/shared/v1/page.proto";
+import "ouchihub/maker/v1/maker.proto";
+import "ouchihub/category/v1/category.proto";
+import "ouchihub/item/v1/item.proto";
+
+service WorkService {
+  rpc ListWorks(ListWorksRequest) returns (ListWorksResponse) {};
+  rpc CreateWork(CreateWorkRequest) returns (CreateWorkResponse) {};
+}
+
+enum Sort {
+  SORT_UNSPECIFIED = 0;
+  SORT_TITLE_ASC = 1;
+  SORT_TITLE_DESC = 2;
+  SORT_MAKER_NAME_ASC = 3;
+  SORT_MAKER_NAME_DESC = 4;
+}
+
+message Filter {
+  repeated string author_ids = 1;
+  repeated string maker_ids = 2;
+}
+
+message ListWorksRequest {
+  string page_token = 1;
+  optional Sort sort = 2;
+  optional Filter filter = 3;
+}
+
+message ListWorksResponse {
+  repeated Work works = 1;
+  ouchihub.shared.v1.PageInfo page_info = 2;
+}
+
+message CreateWorkRequest {
+
+}
+
+message CreateWorkResponse {
+
+}
+
+message Work {
+  string id = 1;
+  string title = 2;
+  ouchihub.maker.v1.Maker maker = 3;
+  ouchihub.category.v1.Category category = 4;
+  bool is_restricted = 5;
+  ouchihub.item.v1.Item root_item = 6;
+}

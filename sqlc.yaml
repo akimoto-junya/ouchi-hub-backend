@@ -1,16 +1,19 @@
 version: "2"
 sql:
- - engine: "mysql"
+ - engine: "postgresql"
    queries: [
      "sqlc/query/users.sql",
+     "sqlc/query/items.sql",
    ]
    schema: [
      "sqlc/schema/0000_preload.sql",
      "sqlc/schema/0001_users.sql",
+     "sqlc/schema/1000_items.sql",
    ]
    gen:
      go:
        package: "db"
+       sql_package: "pgx/v5"
        out: "internal/infra/db"
        overrides:
          - db_type: "uuid"

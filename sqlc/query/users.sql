@@ -1,5 +1,7 @@
 -- name: CreateUser :exec
-INSERT INTO users (id)
-VALUES (?)
+INSERT INTO users
+  (id)
+VALUES
+  ($1)
 ;
 

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ouchihub.category.v1;
+
+service CategoryService {
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {};
+}
+
+message ListCategoriesRequest {
+  bool needs_restricted = 1;
+}
+
+message ListCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message Category {
+  string id = 1;
+  string name = 2;
+  bool is_restricted = 3;
+}

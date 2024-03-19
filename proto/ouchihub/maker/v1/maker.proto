@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package ouchihub.maker.v1;
+
+import "ouchihub/shared/v1/first_char.proto";
+
+service MakerService {
+  rpc ListMakers(ListMakersRequest) returns (ListMakersResponse) {};
+}
+
+message Filter {
+  optional ouchihub.shared.v1.FirstChar first_char = 1;
+}
+
+message ListMakersRequest {
+  string page_token = 1;
+  bool needs_restricted = 2;
+  optional Filter filter = 3;
+}
+
+message ListMakersResponse {
+  repeated Maker makers = 1;
+}
+
+message Maker {
+  string id = 1;
+  string name = 2;
+  bool is_restricted = 4;
+}

@@ -1,0 +1,4 @@
+CREATE TABLE works (
+  id VARCHAR(64) NOT NULL,
+  PRIMARY KEY(id)
+);
