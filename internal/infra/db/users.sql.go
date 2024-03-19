@@ -10,11 +10,13 @@ import (
 )
 
 const createUser = `-- name: CreateUser :exec
-INSERT INTO users (id)
-VALUES (?)
+INSERT INTO users
+  (id)
+VALUES
+  ($1)
 `
 
 func (q *Queries) CreateUser(ctx context.Context, id string) error {
-	_, err := q.db.ExecContext(ctx, createUser, id)
+	_, err := q.db.Exec(ctx, createUser, id)
 	return err
 }
