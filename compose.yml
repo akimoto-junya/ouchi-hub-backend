@@ -10,7 +10,7 @@ services:
     ports:
       - "9000:9000"
   db:
-    image: postgres:15.4-bookworm
+    image: postgres:15.6-bookworm
     ports:
       - "5432:5432"
     volumes:
