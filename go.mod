@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	connectrpc.com/connect v1.15.0
 	connectrpc.com/grpcreflect v1.2.0
-	github.com/google/go-cmp v0.5.9
+	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.5.5
 	golang.org/x/net v0.22.0
