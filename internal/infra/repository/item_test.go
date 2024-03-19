@@ -6,6 +6,7 @@ import (
 	"github.com/akimoto-junya/ouchi-hub-backend/internal/domain/model"
 	"github.com/akimoto-junya/ouchi-hub-backend/internal/infra/db"
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/google/uuid"
 )
 
@@ -55,11 +56,11 @@ func TestMakeItemRanegs(t *testing.T) {
 					Files: []*model.File{
 						{
 							ID:   uuid.MustParse("00000000-0000-0000-0000-000000000007"),
-							Name: "file03",
+							Name: "file03.mp4",
 						},
 						{
 							ID:   uuid.MustParse("00000000-0000-0000-0000-000000000008"),
-							Name: "file04",
+							Name: "file04.mp3",
 						},
 					},
 				},
@@ -96,24 +97,28 @@ func TestMakeItemRanegs(t *testing.T) {
 				},
 				{
 					ID:     "00000000-0000-0000-0000-000000000004",
+					Name:   "dir04",
 					WorkID: "10000000-0000-0000-0000-000000000001",
 					Lft:    6,
 					Rgt:    11,
 				},
 				{
 					ID:     "00000000-0000-0000-0000-000000000007",
+					Name:   "file03.mp4",
 					WorkID: "10000000-0000-0000-0000-000000000001",
 					Lft:    12,
 					Rgt:    13,
 				},
 				{
 					ID:     "00000000-0000-0000-0000-000000000008",
+					Name:   "file04.mp3",
 					WorkID: "10000000-0000-0000-0000-000000000001",
 					Lft:    14,
 					Rgt:    15,
 				},
 				{
 					ID:     "00000000-0000-0000-0000-000000000001",
+					Name:   "dir01",
 					WorkID: "10000000-0000-0000-0000-000000000001",
 					Lft:    1,
 					Rgt:    16,
@@ -132,6 +137,7 @@ func TestMakeItemRanegs(t *testing.T) {
 			expect: []*db.Item{
 				{
 					ID:     "00000000-0000-0000-0000-000000000001",
+					Name:   "dir01",
 					WorkID: "10000000-0000-0000-0000-000000000001",
 					Lft:    1,
 					Rgt:    2,
@@ -147,7 +153,7 @@ func TestMakeItemRanegs(t *testing.T) {
 			got := []*db.Item{}
 			count := 0
 			makeItemRanges(1, tt.input.dir, tt.input.workID, &got, &count)
-			if diff := cmp.Diff(tt.expect, got); diff != "" {
+			if diff := cmp.Diff(tt.expect, got, cmpopts.IgnoreFields(db.Item{}, "TypeID")); diff != "" {
 				t.Errorf("mismatch (-want +got)\n%s", diff)
 			}
 		})
