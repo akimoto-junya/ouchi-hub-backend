@@ -17,7 +17,7 @@ type storage struct{}
 
 func NewOuchiHubStorage() (OuchiHubStorage, error) {
 	path := config.MustGetStoragePath()
-	if d, err := os.Stat(path); err == nil || !d.IsDir() {
+	if d, err := os.Stat(path); err != nil || !d.IsDir() {
 		if err == nil {
 			err = fmt.Errorf("%s is not directory, mode (%s)", d.Name(), d.Mode().String())
 		}
