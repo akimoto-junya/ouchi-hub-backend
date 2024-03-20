@@ -8,10 +8,16 @@ buf-generate:
 
 .PHONY: generate
 generate: buf-generate
+	go generate ./...
 
 .PHONY: buf-lint
 buf-lint:
 	@docker run --rm --mount type=bind,src=./,dst=/work --workdir /work buf-connect lint
+
+.PHONY: lint
+lint: buf-lint
+	golangci-lint run ./...
+
 
 .PHONY: test
 test:

@@ -1,26 +1,25 @@
-name: ci
+name: ci-buf
 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    paths:
+      - proto/**
+      - .github/workflows/ci-buf.yaml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint-and-test:
+  buf-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
-      - uses: actions/setup-go@v5
+      - uses: bufbuild/buf-setup-action@v1
         with:
-          go-version-file: ./go.mod
-      - uses: golangci/golangci-lint-action@v4
-        with:
-          version: v1.54.2
-          skip-pkg-cache: true
-      - run: go test ./...
+          version: "1.26.1"
+      - uses: bufbuild/buf-lint-action@v1
 
