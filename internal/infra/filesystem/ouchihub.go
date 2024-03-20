@@ -2,6 +2,7 @@ package filesystem
 
 import (
 	"errors"
+	"fmt"
 	"os"
 
 	"github.com/akimoto-junya/ouchi-hub-backend/internal/config"
@@ -17,7 +18,10 @@ type storage struct{}
 func NewOuchiHubStorage() (OuchiHubStorage, error) {
 	path := config.MustGetStoragePath()
 	if d, err := os.Stat(path); err == nil || !d.IsDir() {
-		return nil, ErrStorageNotFound
+		if err == nil {
+			err = fmt.Errorf("%s is not directory", d.Name())
+		}
+		return nil, fmt.Errorf("%w: %w", ErrStorageNotFound, err)
 	}
 	return &storage{}, nil
 }
