@@ -51,7 +51,6 @@ func (s *storage) FindWorkDir(bucketID uuid.UUID, relPath string) (*model.Direct
 		return nil, fmt.Errorf("%w: %w", ErrRootDirNotFound, err)
 	}
 
-
 	dirs := map[string]*model.Directory{}
 	if err := filepath.WalkDir(path, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
