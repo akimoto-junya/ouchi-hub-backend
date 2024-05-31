@@ -18,7 +18,7 @@ func main() {
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
 
 	s := http.NewServeMux()
-	RegisterServerReflection(s)
+	ui.RegisterServerReflection(s)
 
 	db, err := pgxpool.New(context.Background(), "postgres://user:password@db:5432/ouchihub")
 	if err != nil {
