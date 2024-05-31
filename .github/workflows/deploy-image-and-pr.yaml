@@ -21,7 +21,7 @@ jobs:
       - name: 'Build and Push image to Artifact Registry'
         uses: docker/build-push-action@v5
         with:
-          context: ./docker/server
+          context: .
           push: true
           file: ./docker/server/Dockerfile
           tags: asia-northeast1-docker.pkg.dev/ouchihub/ouchi-hub/backend:${{ github.sha }}
