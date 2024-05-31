@@ -16,9 +16,9 @@ func TestMakeItemRanegs(t *testing.T) {
 		workID uuid.UUID
 	}
 	tests := []struct {
-		name   string
-		input  input
-		expect []*db.Item
+		name  string
+		input input
+		want  []*db.Item
 	}{
 		{
 			name: "Success",
@@ -65,13 +65,14 @@ func TestMakeItemRanegs(t *testing.T) {
 				},
 				workID: uuid.MustParse("10000000-0000-0000-0000-000000000001"),
 			},
-			expect: []*db.Item{
+			want: []*db.Item{
 				{
 					ID:       "00000000-0000-0000-0000-000000000003",
 					Name:     "dir03",
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      3,
 					Rgt:      4,
+					IsFile:   false,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000002",
@@ -79,6 +80,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      2,
 					Rgt:      5,
+					IsFile:   false,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000005",
@@ -86,6 +88,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      7,
 					Rgt:      8,
+					IsFile:   true,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000006",
@@ -93,6 +96,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      9,
 					Rgt:      10,
+					IsFile:   true,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000004",
@@ -100,6 +104,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      6,
 					Rgt:      11,
+					IsFile:   false,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000007",
@@ -107,6 +112,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      12,
 					Rgt:      13,
+					IsFile:   true,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000008",
@@ -114,6 +120,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      14,
 					Rgt:      15,
+					IsFile:   true,
 				},
 				{
 					ID:       "00000000-0000-0000-0000-000000000001",
@@ -121,6 +128,7 @@ func TestMakeItemRanegs(t *testing.T) {
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      1,
 					Rgt:      16,
+					IsFile:   false,
 				},
 			},
 		},
@@ -133,13 +141,14 @@ func TestMakeItemRanegs(t *testing.T) {
 				},
 				workID: uuid.MustParse("10000000-0000-0000-0000-000000000001"),
 			},
-			expect: []*db.Item{
+			want: []*db.Item{
 				{
 					ID:       "00000000-0000-0000-0000-000000000001",
 					Name:     "dir01",
 					BucketID: "10000000-0000-0000-0000-000000000001",
 					Lft:      1,
 					Rgt:      2,
+					IsFile:   false,
 				},
 			},
 		},
@@ -152,7 +161,7 @@ func TestMakeItemRanegs(t *testing.T) {
 			got := []*db.Item{}
 			count := 0
 			makeItemRanges(1, tt.input.dir, tt.input.workID, &got, &count)
-			if diff := cmp.Diff(tt.expect, got); diff != "" {
+			if diff := cmp.Diff(tt.want, got); diff != "" {
 				t.Errorf("mismatch (-want +got)\n%s", diff)
 			}
 		})
