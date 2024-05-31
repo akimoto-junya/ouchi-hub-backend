@@ -2,11 +2,11 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/akimoto-junya/ouchi-hub-backend/internal/ui/grpc
+    default: github.com/akimoto-junya/ouchi-hub-backend/grpc
 plugins:
   - plugin: go
-    out: internal/ui/grpc
+    out: grpc
     opt: paths=source_relative
   - plugin: connect-go
-    out: internal/ui/grpc
+    out: grpc
     opt: paths=source_relative

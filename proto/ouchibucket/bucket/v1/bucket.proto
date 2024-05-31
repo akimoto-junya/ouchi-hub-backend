@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package ouchibucket.bucket.v1;
+
+service BucketService {
+  rpc CreateBucket(CreateBucketRequest) returns (CreateBucketResponse) {};
+  rpc ListBuckets(ListBucketsRequest) returns (ListBucketsResponse) {};
+  rpc SyncBucket(SyncBucketRequest) returns (SyncBucketResponse) {}; // deprecated
+}
+
+message CreateBucketRequest {
+  string name = 1;
+  string storage_id = 2;
+}
+
+message CreateBucketResponse {
+  string id = 1;
+}
+
+message ListBucketsRequest {
+  string storage_id = 1;
+}
+
+message ListBucketsResponse {
+  repeated Bucket buckets = 1;
+}
+
+message SyncBucketRequest {
+  string bucket_id = 1;
+  string relative_path = 2;
+}
+
+message SyncBucketResponse {}
+
+message Bucket {
+  string id = 1;
+  string name = 2;
+  string root_directory_id = 3;
+}

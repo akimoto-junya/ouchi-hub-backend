@@ -2,14 +2,15 @@ syntax = "proto3";
 
 package ouchihub.maker.v1;
 
-import "ouchihub/shared/v1/first_char.proto";
+import "ouchihub/v1/first_char.proto";
 
 service MakerService {
   rpc ListMakers(ListMakersRequest) returns (ListMakersResponse) {};
+  rpc CreateMaker(CreateMakerRequest) returns (CreateMakerResponse) {};
 }
 
 message Filter {
-  optional ouchihub.shared.v1.FirstChar first_char = 1;
+  optional ouchihub.v1.FirstChar first_char = 1;
 }
 
 message ListMakersRequest {
@@ -22,8 +23,17 @@ message ListMakersResponse {
   repeated Maker makers = 1;
 }
 
+message CreateMakerRequest {
+  string name = 1;
+  bool is_restricted = 2;
+}
+
+message CreateMakerResponse {
+  string id = 1;
+}
+
 message Maker {
   string id = 1;
   string name = 2;
-  bool is_restricted = 4;
+  bool is_restricted = 3;
 }

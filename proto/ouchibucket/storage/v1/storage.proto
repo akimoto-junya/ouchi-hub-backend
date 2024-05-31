@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package ouchibucket.storage.v1;
+
+service StorageService {
+  rpc GetStorage(GetStorageRequest) returns (GetStorageResponse) {};
+  rpc CreateStorage(CreateStorageRequest) returns (CreateStorageResponse) {};
+  rpc DeleteStorage(DeleteStorageRequest) returns (DeleteStorageResponse) {};
+}
+
+message GetStorageRequest {
+  string owner_id = 1;
+}
+
+message GetStorageResponse {
+  Storage storage = 1;
+}
+
+message CreateStorageRequest {
+  string owner_id = 1;
+}
+
+message CreateStorageResponse {
+  string id = 1;
+}
+
+message DeleteStorageRequest {
+  string owner_id = 1;
+}
+
+message DeleteStorageResponse {}
+
+message Storage {
+  string id = 1;
+  string owner_id = 2;
+}

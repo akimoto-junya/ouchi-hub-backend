@@ -6,18 +6,25 @@ prepare:
 buf-generate:
 	@docker run --rm --mount type=bind,src=./,dst=/work --workdir /work buf-connect generate
 
+.PHONY: sqlc-generate
+sqlc-generate:
+	@docker run --rm --mount type=bind,src=./,dst=/work --workdir /work sqlc/sqlc generate
+
 .PHONY: generate
-generate: buf-generate
+generate: buf-generate sqlc-generate
 	go generate ./...
 
 .PHONY: buf-lint
 buf-lint:
 	@docker run --rm --mount type=bind,src=./,dst=/work --workdir /work buf-connect lint
 
-.PHONY: lint
-lint: buf-lint
-	golangci-lint run ./...
+.PHONY: sqlc-vet
+sqlc-vet:
+	@docker run --rm --mount type=bind,src=./,dst=/work --workdir /work sqlc/sqlc vet
 
+.PHONY: lint
+lint: buf-lint sqlc-vet
+	golangci-lint run ./...
 
 .PHONY: test
 test:

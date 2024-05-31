@@ -8,5 +8,5 @@ type Work struct {
 	Category     Category
 	Maker        Maker
 	IsRestricted bool
-	Root         uuid.UUID
+	RootDirID    uuid.UUID
 }
