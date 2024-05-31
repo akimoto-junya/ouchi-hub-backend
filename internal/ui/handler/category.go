@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	categoryv1 "github.com/akimoto-junya/ouchi-hub-backend/internal/ui/grpc/ouchihub/category/v1"
-	"github.com/akimoto-junya/ouchi-hub-backend/internal/ui/grpc/ouchihub/category/v1/categoryv1connect"
+	categoryv1 "github.com/akimoto-junya/ouchi-hub-backend/grpc/ouchihub/category/v1"
+	"github.com/akimoto-junya/ouchi-hub-backend/grpc/ouchihub/category/v1/categoryv1connect"
 )
 
 type categoryHandler struct{}

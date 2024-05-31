@@ -4,6 +4,8 @@ package ouchihub.category.v1;
 
 service CategoryService {
   rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse) {};
+  rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse) {};
+  rpc DeleteCategory(DeleteCategoryRequest) returns (DeleteCategoryResponse) {};
 }
 
 message ListCategoriesRequest {
@@ -12,6 +14,23 @@ message ListCategoriesRequest {
 
 message ListCategoriesResponse {
   repeated Category categories = 1;
+}
+
+message CreateCategoryRequest {
+  string name = 1;
+  bool is_restricted = 2;
+}
+
+message CreateCategoryResponse {
+  string id = 1;
+}
+
+message DeleteCategoryRequest {
+  string id = 1;
+}
+
+message DeleteCategoryResponse {
+  string id = 1;
 }
 
 message Category {

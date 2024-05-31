@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package ouchihub.v1;
+
+enum Hiragana {
+  HIRAGANA_UNSPECIFIED = 0;
+  // あ
+  HIRAGANA_A = 1;
+  HIRAGANA_I = 2;
+  HIRAGANA_U = 3;
+  HIRAGANA_E = 4;
+  HIRAGANA_O = 5;
+  // か
+  HIRAGANA_KA = 6;
+  HIRAGANA_KI = 7;
+  HIRAGANA_KU = 8;
+  HIRAGANA_KE = 9;
+  HIRAGANA_KO = 10;
+  // さ
+  HIRAGANA_SA = 11;
+  HIRAGANA_SI = 12;
+  HIRAGANA_SU = 13;
+  HIRAGANA_SE = 14;
+  HIRAGANA_SO = 15;
+  // た
+  HIRAGANA_TA = 16;
+  HIRAGANA_TI = 17;
+  HIRAGANA_TU = 18;
+  HIRAGANA_TE = 19;
+  HIRAGANA_TO = 20;
+  // な
+  HIRAGANA_NA = 21;
+  HIRAGANA_NI = 22;
+  HIRAGANA_NU = 23;
+  HIRAGANA_NE = 24;
+  HIRAGANA_NO = 25;
+  // は
+  HIRAGANA_HA = 26;
+  HIRAGANA_HI = 27;
+  HIRAGANA_HU = 28;
+  HIRAGANA_HE = 29;
+  HIRAGANA_HO = 30;
+  // ま
+  HIRAGANA_MA = 31;
+  HIRAGANA_MI = 32;
+  HIRAGANA_MU = 33;
+  HIRAGANA_ME = 34;
+  HIRAGANA_MO = 35;
+  // や
+  HIRAGANA_YA = 36;
+  HIRAGANA_YU = 37;
+  HIRAGANA_YO = 38;
+  // ら
+  HIRAGANA_RA = 39;
+  HIRAGANA_RI = 40;
+  HIRAGANA_RU = 41;
+  HIRAGANA_RE = 42;
+  HIRAGANA_RO = 43;
+  // わ
+  HIRAGANA_WA = 44;
+  HIRAGANA_WO = 45;
+  HIRAGANA_NN = 46;
+}
+
+enum OtherChar {
+  OTHER_CHAR_UNSPECIFIED = 0;
+  OTHER_CHAR_NUM = 1;
+  OTHER_CHAR_SYMBOL = 2;
+}
+
+message FirstChar {
+  oneof value {
+    Hiragana hiragana = 1;
+    OtherChar other = 2;
+  }
+}

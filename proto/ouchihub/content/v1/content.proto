@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package ouchihub.content.v1;
+
+service ContentService {
+  rpc CreateContent(CreateContentRequest) returns (CreateContentResponse) {};
+  rpc ListContents(ListContentsRequest) returns (ListContentsResponse) {};
+}
+
+message CreateContentRequest {
+
+}
+
+message CreateContentResponse {
+
+}
+
+message ListContentsRequest {
+
+}
+
+message ListContentsResponse {
+
+}
+
+message Content {
+
+}

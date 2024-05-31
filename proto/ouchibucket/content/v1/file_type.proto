@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package ouchibucket.content.v1;
+
+
+enum FileType {
+  FILE_TYPE_UNSPECIFIED = 0;
+  FILE_TYPE_TEXT = 1;
+  FILE_TYPE_IMAGE = 2;
+  FILE_TYPE_AUDIO = 3;
+  FILE_TYPE_VIDEO = 4;
+}

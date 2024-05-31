@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package ouchibucket.item.v1;
+
+import "ouchibucket/content/v1/file_type.proto";
+
+service ItemService {
+  rpc InsertItem(InsertItemRequest) returns (InsertItemResponse) {};
+  rpc GetDirectory(GetDirectoryRequest) returns (GetDirectoryResponse) {};
+  rpc MoveItem(MoveItemRequest) returns (MoveItemResponse) {};
+}
+
+message InsertItemRequest {
+  Item item = 1;
+}
+
+message InsertItemResponse {
+}
+
+message GetDirectoryRequest {
+  string item_id = 1;
+  int32 depth = 2;
+}
+
+message GetDirectoryResponse {
+  Directory directory = 1;
+}
+
+message MoveItemRequest {
+  string target_id = 1;
+  string dest_directory_id = 2;
+}
+
+message MoveItemResponse {
+}
+
+message Directory {
+  string id = 1;
+  string name = 2;
+  repeated Directory directories = 3;
+  repeated File files = 4;
+}
+
+message File {
+  string id = 1;
+  string name = 2;
+  content.v1.FileType file_type = 3;
+  string url = 4;
+}
+
+message Item {
+  oneof entity {
+    Directory directory = 1;
+    File file = 2;
+  }
+}

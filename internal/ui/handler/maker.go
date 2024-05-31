@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	makerv1 "github.com/akimoto-junya/ouchi-hub-backend/internal/ui/grpc/ouchihub/maker/v1"
-	"github.com/akimoto-junya/ouchi-hub-backend/internal/ui/grpc/ouchihub/maker/v1/makerv1connect"
+	makerv1 "github.com/akimoto-junya/ouchi-hub-backend/grpc/ouchihub/maker/v1"
+	"github.com/akimoto-junya/ouchi-hub-backend/grpc/ouchihub/maker/v1/makerv1connect"
 )
 
 type makerHandler struct{}

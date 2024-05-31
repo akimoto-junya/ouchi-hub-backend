@@ -5,13 +5,17 @@ linters:
   disable-all: true
   enable:
     - errcheck
-    - gofmt
-    - goimports
     - gosimple
     - govet
     - ineffassign
     - staticcheck
+    - typecheck
     - unused
+    - bodyclose
+    - errname
+    - errorlint
+    - gofmt
+    - goimports
 
 issues:
   exclude-rules:

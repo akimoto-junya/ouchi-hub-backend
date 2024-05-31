@@ -3,12 +3,13 @@ sql:
  - engine: "postgresql"
    queries: [
      "sqlc/query/users.sql",
-     "sqlc/query/items.sql",
+     "sqlc/query/storages.sql",
    ]
    schema: [
      "sqlc/schema/0000_preload.sql",
      "sqlc/schema/0001_users.sql",
-     "sqlc/schema/1000_items.sql",
+     "sqlc/schema/0100_storages.sql",
+     "sqlc/schema/1000_works.sql",
    ]
    gen:
      go:

@@ -1,23 +1,28 @@
 services:
   app:
     build:
-      context: .
+      context: ./docker/server
       dockerfile: Dockerfile.local
     volumes:
       - "./:/work"
+      - "./data:/data"
     working_dir: "/work"
     command: ["air", "-c", ".air.toml"]
     ports:
       - "9000:9000"
+    env_file:
+      - .env.default
+      - .env
+
   db:
     image: postgres:15.4-bookworm
     ports:
       - "5432:5432"
     volumes:
       - "./.data/postgres:/var/lib/postgresql"
-      - "./api/sqlc/schema:/docker-entrypoint-initdb.d"
+      - "./sqlc/schema:/docker-entrypoint-initdb.d"
     command: ["-c", "log_statement=all"]
     environment:
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "calendar"
+      POSTGRES_DB: "ouchihub"

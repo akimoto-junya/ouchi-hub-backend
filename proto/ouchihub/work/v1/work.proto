@@ -3,14 +3,14 @@ syntax = "proto3";
 package ouchihub.work.v1;
 
 //import "google/protobuf/timestamp.proto";
-import "ouchihub/shared/v1/page.proto";
+import "ouchihub/v1/page.proto";
 import "ouchihub/maker/v1/maker.proto";
 import "ouchihub/category/v1/category.proto";
-import "ouchihub/item/v1/item.proto";
 
 service WorkService {
   rpc ListWorks(ListWorksRequest) returns (ListWorksResponse) {};
   rpc CreateWork(CreateWorkRequest) returns (CreateWorkResponse) {};
+  rpc GetDirectory(GetDirectoryRequest) returns (GetDirectoryResponse) {};
 }
 
 enum Sort {
@@ -34,7 +34,7 @@ message ListWorksRequest {
 
 message ListWorksResponse {
   repeated Work works = 1;
-  ouchihub.shared.v1.PageInfo page_info = 2;
+  ouchihub.v1.PageInfo page_info = 2;
 }
 
 message CreateWorkRequest {
@@ -45,11 +45,38 @@ message CreateWorkResponse {
 
 }
 
+message GetDirectoryRequest {
+  string item_id = 1;
+}
+
+message GetDirectoryResponse {
+  Directory directory = 1;
+}
+
 message Work {
   string id = 1;
   string title = 2;
   ouchihub.maker.v1.Maker maker = 3;
   ouchihub.category.v1.Category category = 4;
   bool is_restricted = 5;
-  ouchihub.item.v1.Item root_item = 6;
+  string root_item_id = 6;
+}
+
+message Directory {
+  string id = 1;
+  string name = 2;
+  repeated Directory directories = 3;
+  repeated File files = 4;
+}
+
+message File {
+  string id = 1;
+  string name = 2;
+  FileType file_type = 3;
+  string url = 4;
+}
+
+enum FileType {
+  FILE_TYPE_UNSPECIFIED = 0;
+  FILE_TYPE_IMAGE = 1;
 }
