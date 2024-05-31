@@ -15,7 +15,7 @@ services:
       - .env
 
   db:
-    image: postgres:16.2-bookworm
+    image: postgres:16.3-bookworm
     ports:
       - "5432:5432"
     volumes:
