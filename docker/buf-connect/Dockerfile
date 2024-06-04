@@ -1,4 +1,4 @@
-FROM golang:1.22.3-alpine3.19 as prepare
+FROM golang:1.22.4-alpine3.19 as prepare
 RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
     go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && \
     go install connectrpc.com/connect/cmd/protoc-gen-connect-go@latest
