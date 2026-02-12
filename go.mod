@@ -1,15 +1,15 @@
 module github.com/akimoto-junya/ouchi-hub-backend
 
-go 1.22.3
+go 1.24.0
 
 require (
-	connectrpc.com/connect v1.16.2
+	connectrpc.com/connect v1.19.1
 	connectrpc.com/grpcreflect v1.2.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.6.0
 	golang.org/x/net v0.25.0
-	google.golang.org/protobuf v1.34.1
+	google.golang.org/protobuf v1.36.9
 )
 
 require (
