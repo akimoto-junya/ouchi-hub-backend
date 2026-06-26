@@ -9,7 +9,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: 'Google Cloud Auth'
         uses: google-github-actions/auth@v2
         with: 
@@ -32,7 +32,7 @@ jobs:
       - build-and-push-image
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: akimoto-junya/ouchi-hub-manifests
       - name: 'Update tag'
